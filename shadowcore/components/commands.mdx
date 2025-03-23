@@ -1,0 +1,52 @@
+---
+title: Commands
+description: Learn about the command system in ShadowCore and how it works.
+---
+
+# Commands Component
+
+The **Commands Component** in ShadowCore provides a structured way to define, manage, and execute commands within your Discord bot. This system ensures modularity, scalability, and ease of use.
+
+## 🛠 Overview
+ShadowCore's command system automatically loads and organizes commands from designated directories. Each command is defined in its own file, following a standardized structure.
+
+### Key Features:
+- **Automatic Command Registration**: Commands are dynamically loaded from folders.
+- **Built-in Argument Parsing**: Supports extracting arguments from user input.
+- **Permissions & Cooldowns**: Restrict commands based on roles and enforce rate limits.
+- **Middleware Support**: Pre/post-execution middleware for additional logic.
+
+## 📂 Command Structure
+Commands in ShadowCore are organized within the `/commands` directory and categorized into subfolders.
+
+**Example Folder Structure:**
+```
+/commands/general/ping.ts 
+/commands/admin/ban.ts 
+/commands/moderation/kick.ts
+```
+
+Each command file must export a command object containing its configuration and execution logic.
+
+## 🔧 Command Object Structure
+A command in ShadowCore follows this basic structure:
+
+```ts
+import { Command } from "shadow-core";
+
+export default new Command({
+    name: "example",
+    description: "This is an example command.",
+    run: async (interaction) => {
+        await interaction.reply("Hello from ShadowCore!");
+    },
+});
+```
+Properties:
+
+| Property       | Type     | Description                                      |
+|---------------|---------|--------------------------------------------------|
+| `name`        | string  | The command's name (used for invocation).        |
+| `description` | string  | A short description of the command.              |
+| `options`     | array   | (Optional) Command options for arguments.        |
+| `run`         | function | The function executed when the command is used. |

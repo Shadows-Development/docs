@@ -19,6 +19,12 @@
               "shadowcore/introduction",
               "shadowcore/getting-started"
             ]
+          },
+          {
+            "group": "Components",
+            "pages": [
+              "shadowcore/components/commands"
+            ]
           }
         ]
       }
