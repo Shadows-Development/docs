@@ -1,0 +1,61 @@
+---
+title: Select Menus
+description: A guide for using select menus in ShadowCore.
+---
+
+# Select Menus
+
+Select menus are interactive dropdown menus that allow users to select an option from a list. In ShadowCore, you can easily create and manage select menus as part of the interactive components system. These menus are perfect for creating sophisticated user interfaces with multiple options.
+
+## 📂 Menu Structure
+Select Menus in ShadowCore are organized within the `/menus` directory and categorized into subfolders.
+
+**Example Folder Structure:**
+```
+/menus/general/ping.ts 
+/menus/admin/ban.ts 
+/menus/ticket/open.ts
+```
+
+## ⚙️ Properties
+
+The Select Menu component allows you to specify the following properties:
+
+```md
+| Property       | Type     | Description                                                  |
+|----------------|----------|--------------------------------------------------------------|
+| `customId`     | string   | The unique ID for the select menu (used to identify it).     |
+| `run`          | function | The function executed when the menu is used.                 |
+```
+
+## 🧩 Usage
+To create a select menu, define the customId and the run function that will handle the user's selection.
+Here's an example of creating a basic select menu:
+
+```ts
+import { Menu } from "shadow-core";
+
+export default new Menu({
+    customId: "example-select",
+    run: async (interaction) => {
+        const selectedOption = interaction.values[0]; // Get the selected option
+        await interaction.reply(`You selected: ${selectedOption}`);
+    },
+});
+```
+
+### Handling Dynamic Select Menus
+You can also create dynamic select menus using special IDs, similar to buttons. Here's an example:
+
+```ts
+import { Menu, splitSpecialId } from "shadow-core";
+export default new Menu({
+    customId: "ticket:open:{id}",
+    run: async (interaction) => {
+        const { id } = splitSpecialId(interaction.customId);
+        const selectedOption = interaction.values[0]; // Get the selected option
+        await interaction.reply(`Ticket ID: ${id}, Selected Option: ${selectedOption}`);
+    },
+});
+```
+In this example, the `splitSpecialId` method splits the `customId` into components, allowing you to use dynamic values (e.g., ticket IDs) along with the selected option from the menu. 

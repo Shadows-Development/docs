@@ -7,6 +7,16 @@ description: A guide for using buttons in ShadowCore.
 
 Buttons in ShadowCore allow you to create interactive buttons that users can click to trigger specific actions. Buttons are a part of the broader interactive components system and are used for a variety of purposes, such as opening menus, executing commands, and more.
 
+## 📂 Button Structure
+Buttons in ShadowCore are organized within the `/buttons` directory and categorized into subfolders.
+
+**Example Folder Structure:**
+```
+/buttons/general/ping.ts 
+/buttons/admin/ban.ts 
+/buttons/ticket/close.ts
+```
+
 ## ⚙️ Properties
 
 The Button component allows you to specify the following properties:
@@ -41,10 +51,10 @@ You can also create dynamic buttons using special IDs, like so:
 import { Button, splitSpecialId } from "shadow-core";
 
 export default new Button({
-    customId: "ticket:open:{id}",
+    customId: "ticket:close:{id}",
     run: async (interaction) => {
         const { id } = splitSpecialId(interaction.customId);
-        await interaction.reply(`Ticket opened with ID: ${id}`);
+        await interaction.reply(`Ticket closed with ID: ${id}`);
     }
 })
 ```
