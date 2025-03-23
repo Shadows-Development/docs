@@ -25,7 +25,9 @@
             "pages": [
               "shadowcore/components/commands",
               "shadowcore/components/buttons",
-              "shadowcore/components/menus"
+              "shadowcore/components/menus",
+              "shadowcore/components/events",
+              "shadowcore/components/middleware"
             ]
           }
         ]

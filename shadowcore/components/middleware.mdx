@@ -1,0 +1,114 @@
+---
+title: Middleware
+description: A guide for using middleware in ShadowCore.
+---
+
+<Note>
+    Middleware is currently only available for commands. More middleware types will be added in future releases.
+</Note>
+
+# Command Middleware
+
+Middleware in ShadowCore allows you to execute logic before and after a command's execution. It is useful for tasks like logging, validation, permission checks, or modifying the command's behavior. You can define middleware for specific commands or globally for all commands.
+
+## 📂 Middleware Structure
+Middleware in ShadowCore are organized within the `/middleware` directory and categorized into subfolders.
+
+**Example Folder Structure:**
+```
+/middleware/command/ping.ts 
+/middleware/command/ban.ts 
+/middleware/command/kick.ts
+```
+
+## ⚙️ Properties
+
+The CommandMiddleware component allows you to specify the following properties:
+
+```md
+| Property         | Type     | Description                                                   |
+|------------------|----------|---------------------------------------------------------------|
+| `name`           | string   | The name of the middleware. It can be specific to a command (e.g., "ping") or global (e.g., "global"). |
+| `beforeExecution` | function | The function to run before the command executes. Should return `true` to allow the command to run. |
+| `afterExecution`  | function | The function to run after the command has executed. |
+```
+
+## 🧩 Usage
+
+You can create middleware for specific commands or for all commands globally. The `beforeExecution` function runs before the command executes, and the `afterExecution` function runs after the command has finished executing.
+
+### Specific Command Middleware
+This middleware will only apply to a specific command. For example, you can create middleware for the `ping` command:
+```ts
+import { CommandMiddleware } from "shadow-core";
+
+export default new CommandMiddleware({
+    name: "ping",
+    beforeExecution: async (interaction, command) => {
+        console.log("Ping Before");
+        return true; // Continue with command execution
+    },
+    afterExecution: async (interaction, command) => {
+        console.log("Ping After");
+    },
+});
+```
+In this example:
+- The `name` is `"ping"`, so this middleware will only apply to the `ping` command.
+- The `beforeExecution` function is executed before the command runs.
+- The `afterExecution` function is executed after the command completes.
+
+### Global Command Middleware
+Global middleware applies to all commands. It is useful for tasks like logging or permission checks that should be applied universally.
+```ts 
+import { CommandMiddleware } from "shadow-core";
+
+export default new CommandMiddleware({
+    name: "global",
+    beforeExecution: async (interaction, command) => {
+        console.log("Global Before");
+        return true; // Continue with command execution
+    },
+    afterExecution: async (interaction, command) => {
+        console.log("Global After");
+    },
+});
+```
+In this example:
+- The `name` is `"global"`, so this middleware will apply to all commands.
+- The `beforeExecution` and `afterExecution` functions will be run for every command.
+
+## 🔄 Execution Flow
+The middleware's `beforeExecution` function is called before the command executes. If `beforeExecution` returns `false`, the command will be blocked and will not execute.
+
+After the command runs, the `afterExecution` function is called. This happens regardless of whether the command was successful or not. `afterExecution` only runs if `beforeExecution` returned `true`.
+
+## 🔧 Middleware Order
+
+ShadowCore executes middleware in the order they are registered. For example:
+
+1. Global middleware is executed first.
+2. Specific command middleware is executed second.
+3. The command itself is executed.
+4. Global middleware's `afterExecution` is executed.
+5. Specific command middleware's `afterExecution` is executed last.
+
+This allows for layered logic and flexibility.
+
+## 🎯 Example: Logging Middleware
+You can use middleware to log the execution of each command:
+```ts
+import { CommandMiddleware } from "shadow-core";
+
+export default new CommandMiddleware({
+  name: "global",
+  beforeExecution: async (interaction, command) => {
+    console.log(`Command ${command.name} is about to run.`);
+    return true;
+  },
+  afterExecution: async (interaction, command) => {
+    console.log(`Command ${command.name} has finished executing.`);
+  },
+});
+```
+In this case, the middleware logs when a command starts and finishes.

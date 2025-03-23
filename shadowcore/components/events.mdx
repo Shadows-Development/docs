@@ -1,0 +1,78 @@
+---
+title: Events
+description: A guide for using events in ShadowCore.
+---
+
+# Events
+
+Events in ShadowCore allow you to hook into various lifecycle stages of the bot and respond to them. They are an essential part of the bot's behavior, as they allow you to execute code when specific actions or triggers occur, such as when the bot logs in, a user sends a message, or a button is clicked.
+
+## 📂 Event Structure
+Events in ShadowCore are organized within the `/events` directory.
+
+**Example Folder Structure:**
+```
+/events/ready.ts 
+/events/guildMemberAdd.ts
+/events/guildMemberRemove.ts
+```
+
+## ⚙️ Properties
+
+The Event component allows you to specify the following properties:
+
+```md
+| Property     | Type     | Description                                                   |
+|--------------|----------|---------------------------------------------------------------|
+| `name`       | string   | The name of the event (e.g., "ready", "messageCreate").       |
+| `run`        | function | The function that will be executed when the event is triggered.|
+| `once`       | boolean  | (Optional) If true, the event will be removed after it is triggered once. Defaults to `false`. |
+```
+
+## 🧩 Usage
+To define an event, create a new `Event` instance and specify the event name (`name`), the function to run when the event triggers (`run`), and whether the event should only trigger once (`once`).
+
+Here's an example of creating a `ready` event that registers commands when the bot is ready:
+
+```ts
+import { Event } from "shadow-core";
+import { bot } from "../index"; // Import your bot instance
+
+export default new Event("ready", async (client) => {
+    console.log(`✅ Logged in as ${client.user?.tag}`);
+    const GUILD_ID = "YOUR_GUILD_ID"; // Replace with your server's ID
+    await bot.getCommandManager().registerCommands(GUILD_ID);
+}, true); 
+```
+In this example:
+- The name is "ready", which is the event that triggers when the bot logs in successfully.
+- The run function registers the commands for the bot when it's ready.
+- The once property is set to true, so the event will only trigger once.
+
+### Handling Other Events
+You can create events for any of the supported Discord.js events. For example, you could handle the `messageCreate` event to listen for new messages and respond accordingly.
+
+Example of handling the `messageCreate` event:
+
+```ts
+import { Event } from "shadow-core";
+
+export default new Event("messageCreate", async (message) => {
+    if (message.content === "!ping") {
+        message.reply("Pong!");
+    }
+}, false);  
+```
+In this example:
+
+- The `name` is `"messageCreate"`, which triggers when a new message is sent.
+- The `run` function checks if the message content is `!ping` and replies with `"Pong!"`.
+
+## 🔄 Event Lifecycle
+ShadowCore uses Discord.js's event system, and events like `ready`, `messageCreate`, and `interactionCreate` are just a few examples of the available events. You can register any event that Discord.js supports.
+
+<Note>
+    **The interactionCreate is already handled by ShadowCore and does not need to be registered manually. It is automatically set up to handle interactions like buttons, select menus, and commands.**
+
+    For a full list of events supported by Discord.js, refer to the [Discord.js documentation](https://discord.js.org/docs/packages/discord.js/14.18.0/Events:Enum).
+</Note>
