@@ -63,7 +63,8 @@ import { Bot } from "shadow-core";
 import { GatewayIntentBits } from "discord.js";
 
 // Replace with your bot's token
-const token = "YOUR_BOT_TOKEN";
+const token = "YOUR_BOT_TOKEN"; // Replace with your Bots token
+const GUILD_ID = "YOUR_GUILD_ID"; // Replace with your server's ID
 
 // Initialize the bot
 export const bot = new Bot(
@@ -78,7 +79,9 @@ bot.getClient().once("ready", () => {
     bot.getCommandManager().registerCommands("GUILD_ID");
 });
 ```
-
+<Info>
+    **You can get your bot's token from the [Discord Developer Portal](https://discord.com/developers/applications). 
+</Info>
 #### **Step 5: Run Your Bot**
 For TypeScript:
 ```
