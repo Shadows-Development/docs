@@ -35,6 +35,18 @@
         ]
       },
       {
+        "tab": "ShadowCore",
+        "groups": [
+          {
+            "group": "Overview",
+            "pages": [
+              "shadowcore/introduction",
+              "shadowcore/getting-started"
+            ]
+          }
+        ]
+      },
+      {
         "tab": "API Reference",
         "groups": [
           {

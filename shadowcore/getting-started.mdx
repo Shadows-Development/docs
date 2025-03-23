@@ -1,0 +1,107 @@
+---
+title: "Getting Started"
+description: "Set up ShadowCore and create your first bot."
+---
+
+# Getting Started
+
+Welcome to ShadowCore! This guide will help you set up your development environment and create your first bot using ShadowCore.
+
+## 📦 Installation
+
+Before getting started, ensure you have the following prerequisites installed:
+
+- **[Node.js](https://nodejs.org/)** (Version 18 or higher)
+- **[npm](https://www.npmjs.com/)** (or Yarn/Pnpm)
+- **[Git](https://git-scm.com/)** (optional, but recommended)
+
+### 1️⃣ Install ShadowCore
+<Info>
+    **Installing ShadowCore globally is **not required**. It is only recommended if you want easy access to the CLI once it is fully finished. You can skip this step for now.**
+</Info>
+To install ShadowCore globally, run:
+
+```
+npm install -g shadow-core
+```
+
+Or, if you prefer using it locally within a project:
+
+```
+npm install shadow-core
+```
+
+### 2️⃣ Setting Up a New Bot
+
+Since the CLI `init` command is not available yet, you'll need to manually set up your bot.
+
+#### **Step 1: Create a New Project Folder**
+```
+mkdir my-bot && cd my-bot
+```
+
+#### **Step 2: Initialize a `package.json`**
+Run the following command and follow the prompts:
+```
+npm init -y
+```
+
+#### **Step 3: Install ShadowCore**
+Inside your bot's directory, install ShadowCore:
+
+```
+npm install shadow-core
+```
+
+#### **Step 4: Create the Bot's Entry File**
+Create a new file called `index.ts` (or `index.js` if using JavaScript) and open it in your editor.
+
+Paste the following basic bot setup:
+
+```ts
+import { Bot } from "shadow-core";
+import { GatewayIntentBits } from "discord.js";
+
+// Replace with your bot's token
+const token = "YOUR_BOT_TOKEN";
+
+// Initialize the bot
+export const bot = new Bot(
+  token,
+  [GatewayIntentBits.Guilds, GatewayIntentBits.GuildMessages, GatewayIntentBits.MessageContent],
+  false // Debug mode disabled
+);
+
+// Log when the bot is ready
+bot.getClient().once("ready", () => {
+    console.log(`✅ Logged in as ${bot.getClient().user?.tag}`);
+    bot.getCommandManager().registerCommands("GUILD_ID");
+});
+```
+
+#### **Step 5: Run Your Bot**
+For TypeScript:
+```
+npx ts-node index.ts
+```
+For JavaScript:
+```
+node index.js
+```
+
+## 🎯 Next Steps
+
+Now that your bot is running, explore the following topics to enhance its functionality:
+
+- [Creating Commands](../commands)
+- [Handling Events](../events)
+- [Using Middleware](../middleware)
+- [Expanding with Plugins](../plugins)
+
+## ❓ Need Help?
+
+If you encounter any issues, check out the [FAQ](../faq) or join the community for support.
+
+---
+
+You're all set! 🚀 Start building your bot and take full advantage of ShadowCore's powerful features.
