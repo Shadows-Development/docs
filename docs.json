@@ -23,7 +23,8 @@
           {
             "group": "Components",
             "pages": [
-              "shadowcore/components/commands"
+              "shadowcore/components/commands",
+              "shadowcore/components/buttons"
             ]
           }
         ]

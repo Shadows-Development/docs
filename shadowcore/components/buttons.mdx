@@ -1,0 +1,51 @@
+---
+title: Buttons
+description: A guide for using buttons in ShadowCore.
+---
+
+# Buttons
+
+Buttons in ShadowCore allow you to create interactive buttons that users can click to trigger specific actions. Buttons are a part of the broader interactive components system and are used for a variety of purposes, such as opening menus, executing commands, and more.
+
+## ⚙️ Properties
+
+The Button component allows you to specify the following properties:
+
+```md
+| Property       | Type     | Description                                              |
+|----------------|----------|----------------------------------------------------------|
+| `customId`     | string   | The unique ID for the button (used to identify it).      |
+| `run`          | function | The function executed when the button is clicked.        |
+```
+
+## 🧩 Usage
+To create a button, you must define the button's `customId`.
+
+Here's an example of creating a simple button:
+
+```ts
+import { Button } from "shadow-core";
+
+export default new Button({
+    customId: "example-button",
+    run: async (interaction) => {
+        await interaction.reply("Button clicked!");
+    }
+});
+```
+
+### Handling Dynamic Buttons
+You can also create dynamic buttons using special IDs, like so:
+
+```ts
+import { Button, splitSpecialId } from "shadow-core";
+
+export default new Button({
+    customId: "ticket:open:{id}",
+    run: async (interaction) => {
+        const { id } = splitSpecialId(interaction.customId);
+        await interaction.reply(`Ticket opened with ID: ${id}`);
+    }
+})
+```
+In this example, the `splitSpecialId` method splits the `customId` into components, allowing you to use dynamic values (e.g., ticket IDs).
