@@ -76,21 +76,22 @@ export const bot = new Bot(
 // Log when the bot is ready
 bot.getClient().once("ready", () => {
     console.log(`✅ Logged in as ${bot.getClient().user?.tag}`);
-    bot.getCommandManager().registerCommands("GUILD_ID");
+    bot.getCommandManager().registerCommands(GUILD_ID);
 });
 ```
 <Info>
     **You can get your bot's token from the [Discord Developer Portal](https://discord.com/developers/applications).** 
 </Info>
 #### **Step 5: Run Your Bot**
-For TypeScript:
-```
-npx ts-node index.ts
-```
-For JavaScript:
-```
-node index.js
-```
+
+<CodeGroup>
+  ```bash Typescript
+  npx ts-node index.ts
+  ```
+  ```bash JavaScript
+  node index.js
+  ```
+</CodeGroup>
 
 ## 🎯 Next Steps
 
